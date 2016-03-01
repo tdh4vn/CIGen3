@@ -15,13 +15,12 @@ import java.io.IOException;
 public class GameWindow extends Frame implements Runnable {
 
     BufferedImage background;
-    BufferedImage planeImage;
-    int planeX = 200;
-    int planeY = 300;
+    Plane planeMoveByKey;
 
     int direction = 0;
 
     public GameWindow() {
+
         //thiet lap tieu de cho cua so
         this.setTitle("TechKids - code the change");
         //thiet lap kich thuoc cho cua so
@@ -39,10 +38,13 @@ public class GameWindow extends Frame implements Runnable {
         //load Image tu thu muc Resource
         try {
             background = ImageIO.read(new File("Resources/Background.png"));
-            planeImage = ImageIO.read(new File("Resources/PLANE1.png"));
+
         } catch (IOException e) {
             e.printStackTrace();
         }
+        initPlane();
+        //bat su kien di chuyen chuot
+        //this.addMouseListener();
         //doan code de bat su kien bam phim
         this.addKeyListener(new KeyListener() {
             //truoc khi bam
@@ -54,21 +56,33 @@ public class GameWindow extends Frame implements Runnable {
             @Override
             public void keyPressed(KeyEvent e) {
                 if(e.getKeyCode() == KeyEvent.VK_A) {
-                    direction = 3;
+                    planeMoveByKey.setDirection(3);
                 } else if(e.getKeyCode() == KeyEvent.VK_D) {
-                    direction = 4;
+                    planeMoveByKey.setDirection(4);
                 } else if(e.getKeyCode() == KeyEvent.VK_W) {
-                    direction = 1;
+                    planeMoveByKey.setDirection(1);
                 } else if(e.getKeyCode() == KeyEvent.VK_S) {
-                    direction = 2;
+                    planeMoveByKey.setDirection(2);
                 }
             }
             //khi nhac phim len
             @Override
             public void keyReleased(KeyEvent e) {
-                direction = 0;
+                planeMoveByKey.setDirection(0);
             }
         });
+    }
+    private void initPlane(){
+        planeMoveByKey = new Plane();
+        planeMoveByKey.setPositionX(300);
+        planeMoveByKey.setPositionY(400);
+        planeMoveByKey.setSpeed(4);
+        //planeImage = ImageIO.read(new File("Resources/PLANE1.png"));
+        try {
+            planeMoveByKey.setSprite(ImageIO.read(new File("Resources/PLANE1.png")));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     //ham ve
     //ve~ moi. thu o day
@@ -79,7 +93,7 @@ public class GameWindow extends Frame implements Runnable {
 
         g.drawImage(background, 0, 0, null);
 
-        g.drawImage(planeImage, planeX, planeY, null);
+        planeMoveByKey.draw(g);
 
         //g.drawLine(0,0, 100, 100);
     }
@@ -87,24 +101,13 @@ public class GameWindow extends Frame implements Runnable {
     //Vong Lap game
     @Override
     public void run() {
-        int count = 0;
+
         while(true) {
 
-            if(direction == 1) {
-                planeY-=3;
-            }
-            if(direction == 2){
-                planeY+=3;
-            }
-            if(direction == 3){
-                planeX-=3;
-            }
-            if(direction == 4){
-                planeX+=3;
-            }
+            planeMoveByKey.update();
 
             repaint();
-            System.out.println(count++);
+
 
             try {
                 Thread.sleep(17);
