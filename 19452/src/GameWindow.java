@@ -14,13 +14,11 @@ public class GameWindow extends Frame implements Runnable {
     Graphics seconds;
     Image image;
     BufferedImage background;
-    Plane planeMoveByKey,planeMoveByMouse;
-    //PlaneEnemy planeEnemy;
-    Vector<PlaneEnemy> vectorPlaneEnemy = new Vector<PlaneEnemy>();
+    Vector<PlaneEnemy> vectorPlaneEnemy;
     int direction = 0;
 
     public GameWindow() {
-
+        vectorPlaneEnemy = PlaneEnemyManager.getInstance().getVectorPlaneEnemy();
         //thiet lap tieu de cho cua so
         this.setTitle("TechKids - code the change");
         //thiet lap kich thuoc cho cua so
@@ -51,7 +49,7 @@ public class GameWindow extends Frame implements Runnable {
             public void mouseClicked(MouseEvent e) {
 
                 if(e.getModifiers()==InputEvent.BUTTON1_MASK){
-                    planeMoveByMouse.shot();
+                    PlaneManager.getInstance().getPlaneMoveByMouse().shot();
 
                 }
             }
@@ -84,7 +82,7 @@ public class GameWindow extends Frame implements Runnable {
 
             @Override
             public void mouseMoved(MouseEvent e) {
-                planeMoveByMouse.move(e.getX(),e.getY());
+                PlaneManager.getInstance().getPlaneMoveByMouse().move(e.getX(),e.getY());
             }
         });
         this.addKeyListener(new KeyListener() {
@@ -97,28 +95,27 @@ public class GameWindow extends Frame implements Runnable {
             @Override
             public void keyPressed(KeyEvent e) {
                 if(e.getKeyCode() == KeyEvent.VK_A) {
-                    planeMoveByKey.setDirection(3);
+                    PlaneManager.getInstance().getPlaneMoveByKey().setDirection(3);
                 } else if(e.getKeyCode() == KeyEvent.VK_D) {
-                    planeMoveByKey.setDirection(4);
+                    PlaneManager.getInstance().getPlaneMoveByKey().setDirection(4);
                 } else if(e.getKeyCode() == KeyEvent.VK_W) {
-                    planeMoveByKey.setDirection(1);
+                    PlaneManager.getInstance().getPlaneMoveByKey().setDirection(1);
                 } else if(e.getKeyCode() == KeyEvent.VK_S) {
-                    planeMoveByKey.setDirection(2);
+                    PlaneManager.getInstance().getPlaneMoveByKey().setDirection(2);
                 } else if(e.getKeyCode() == KeyEvent.VK_SPACE){
-                    planeMoveByKey.shot();
+                    PlaneManager.getInstance().getPlaneMoveByKey().shot();
                 }
             }
             //khi nhac phim len
             @Override
             public void keyReleased(KeyEvent e) {
-                planeMoveByKey.setDirection(0);
+                PlaneManager.getInstance().getPlaneMoveByKey().setDirection(0);
             }
         });
     }
     private void initPlane(){
 
-        planeMoveByKey = new Plane(200,200,3,4);
-        planeMoveByMouse = new Plane(300,300,4,2);
+
        // planeEnemy = new PlaneEnemy(200,200,5);
         vectorPlaneEnemy.add(new PlaneEnemy(200, 200, 1));
         vectorPlaneEnemy.add(new PlaneEnemy(150, 100, 2));
@@ -158,8 +155,8 @@ public class GameWindow extends Frame implements Runnable {
 
         g.drawImage(background, 0, 0, null);
 
-        planeMoveByKey.draw(g);
-        planeMoveByMouse.draw(g);
+        PlaneManager.getInstance().getPlaneMoveByKey().draw(g);
+        PlaneManager.getInstance().getPlaneMoveByMouse().draw(g);
         for(PlaneEnemy planeEnemy : vectorPlaneEnemy){
             planeEnemy.draw(g);
         }
@@ -172,8 +169,8 @@ public class GameWindow extends Frame implements Runnable {
 
         while(true) {
 
-            planeMoveByKey.update();
-            planeMoveByMouse.update();
+            PlaneManager.getInstance().getPlaneMoveByKey().update();
+            PlaneManager.getInstance().getPlaneMoveByMouse().update();
             for(PlaneEnemy planeEnemy : vectorPlaneEnemy){
                 planeEnemy.update();
             }

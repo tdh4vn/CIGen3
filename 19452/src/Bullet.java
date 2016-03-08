@@ -36,6 +36,9 @@ public class Bullet extends GameObject{
     public void update(){
         this.move();
     }
+    //Lay toa do cua 2 may bay
+    //PlaneManager.getInstance()....
+
 
     public void draw(Graphics g){
         g.drawImage(sprite,positionX,positionY,null);

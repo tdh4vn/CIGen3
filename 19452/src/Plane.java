@@ -8,7 +8,7 @@ import java.util.Vector;
 /**
  * Created by hungtran on 3/1/16.
  */
-public class Plane extends  GameObject{
+public class Plane extends GameObject{
     public Plane(){
         //khong co kieu tra ve
         //ten ham giong het ten Class
@@ -65,8 +65,6 @@ public class Plane extends  GameObject{
         vecBul.add(bul);
     }
     private Vector<Bullet> vecBul = new Vector<Bullet>();
-
-
     private int hp;
     private int planeType;
     private int dam;
