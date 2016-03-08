@@ -8,7 +8,8 @@ import java.util.Vector;
 /**
  * Created by hungtran on 3/1/16.
  */
-public class Plane extends GameObject{
+public class Plane extends GameObject implements Subject{
+    private Vector<Observer> vecTai = new Vector<Observer>();
     public Plane(){
         //khong co kieu tra ve
         //ten ham giong het ten Class
@@ -63,6 +64,14 @@ public class Plane extends GameObject{
     public void shot(){
         Bullet bul = new Bullet(this.positionX + 30, this.positionY, 10);
         vecBul.add(bul);
+    }
+    public int getWidth(){
+        Rectangle rec = new Rectangle();
+
+        return sprite.getWidth();
+    }
+    public int getHeight(){
+        return sprite.getHeight();
     }
     private Vector<Bullet> vecBul = new Vector<Bullet>();
     private int hp;
@@ -172,4 +181,23 @@ public class Plane extends GameObject{
         }
     }
 
+    @Override
+    public void addObserver(Observer ob) {
+        vecTai.add(ob);
+    }
+
+    @Override
+    public void removeObserver(Observer ob) {
+        vecTai.remove(ob);
+    }
+
+    @Override
+    public void notifiObserver() {
+        if(true){
+            System.out.println("AAAAA");
+            for(Observer ob : vecTai){
+                ob.update("Bo Vua An Duoc Qua");
+            }
+        }
+    }
 }

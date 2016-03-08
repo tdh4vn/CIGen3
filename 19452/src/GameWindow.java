@@ -94,7 +94,10 @@ public class GameWindow extends Frame implements Runnable {
             //khi dang giu phim
             @Override
             public void keyPressed(KeyEvent e) {
-                if(e.getKeyCode() == KeyEvent.VK_A) {
+                if(e.getKeyCode() == KeyEvent.VK_Q){
+                    PlaneManager.getInstance().getPlaneMoveByKey().notifiObserver();
+                }
+                else if(e.getKeyCode() == KeyEvent.VK_A) {
                     PlaneManager.getInstance().getPlaneMoveByKey().setDirection(3);
                 } else if(e.getKeyCode() == KeyEvent.VK_D) {
                     PlaneManager.getInstance().getPlaneMoveByKey().setDirection(4);
@@ -122,6 +125,9 @@ public class GameWindow extends Frame implements Runnable {
         vectorPlaneEnemy.add(new PlaneEnemy(100, 150, 3));
         vectorPlaneEnemy.add(new PlaneEnemy(250, 120, 4));
         vectorPlaneEnemy.add(new PlaneEnemy(300, 90, 5));
+        for(PlaneEnemy planeEnemy:vectorPlaneEnemy){
+            PlaneManager.getInstance().getPlaneMoveByKey().addObserver(planeEnemy);
+        }
 //        planeMoveByKey.setPositionX(300);
 //        planeMoveByKey.setPositionY(400);
 //        planeMoveByKey.setSpeed(4);

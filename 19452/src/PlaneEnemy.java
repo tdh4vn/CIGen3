@@ -7,7 +7,7 @@ import java.util.Vector;
 /**
  * Created by Tdh4vnPC on 3/1/2016.
  */
-public class PlaneEnemy extends GameObject{
+public class PlaneEnemy extends GameObject implements Observer{
     private int speed;
     private int count = 0;
     public int getSpeed() {
@@ -67,5 +67,12 @@ public class PlaneEnemy extends GameObject{
             bul.draw(g);
         }
         g.drawImage(sprite,positionX,positionY,null);
+    }
+
+    @Override
+    public void update(String msg) {
+        if(msg.equals("Bo Vua An Duoc Qua")){
+            System.out.println("Thang Player Vua An Duoc Qua Roi");
+        }
     }
 }

@@ -35,6 +35,19 @@ public class Bullet extends GameObject{
 
     public void update(){
         this.move();
+        if (checkCollision()){
+            //asdasdsadsadasdasdasdasd
+        }
+    }
+    public boolean checkCollision(){
+        Rectangle rectBullet = new Rectangle(positionX,positionY,sprite.getWidth()
+                                            ,sprite.getHeight());
+        Rectangle rectPlaneKey =
+                new Rectangle(PlaneManager.getInstance().getPlaneMoveByKey().getPositionX()
+                            ,PlaneManager.getInstance().getPlaneMoveByKey().getPositionY()
+                            ,PlaneManager.getInstance().getPlaneMoveByKey().getWidth()
+                            ,PlaneManager.getInstance().getPlaneMoveByKey().getHeight());
+        return rectBullet.intersects(rectPlaneKey);
     }
     //Lay toa do cua 2 may bay
     //PlaneManager.getInstance()....
