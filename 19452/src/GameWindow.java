@@ -16,13 +16,15 @@ public class GameWindow extends Frame implements Runnable {
     BufferedImage background;
     Vector<PlaneEnemy> vectorPlaneEnemy;
     int direction = 0;
-
+    Cat cat = new Cat();
     public GameWindow() {
         vectorPlaneEnemy = PlaneEnemyManager.getInstance().getVectorPlaneEnemy();
         //thiet lap tieu de cho cua so
         this.setTitle("TechKids - code the change");
         //thiet lap kich thuoc cho cua so
-        this.setSize(400, 640);
+        this.setSize(400, 600);
+        GameManager.getInstance().setWindowHeight(600);
+        GameManager.getInstance().setWindowWidth(400);
         //thiet lap xem cua so co hien thi hay khong
         this.setVisible(true);
         //khi an vao nut X thi thoat
@@ -35,7 +37,7 @@ public class GameWindow extends Frame implements Runnable {
         });
         //load Image tu thu muc Resource
         try {
-            background = ImageIO.read(new File("Resources/Background.png"));
+            background = ImageIO.read(new File("Resources/map.png"));
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -117,28 +119,6 @@ public class GameWindow extends Frame implements Runnable {
         });
     }
     private void initPlane(){
-
-
-       // planeEnemy = new PlaneEnemy(200,200,5);
-        vectorPlaneEnemy.add(new PlaneEnemy(200, 200, 1));
-        vectorPlaneEnemy.add(new PlaneEnemy(150, 100, 2));
-        vectorPlaneEnemy.add(new PlaneEnemy(100, 150, 3));
-        vectorPlaneEnemy.add(new PlaneEnemy(250, 120, 4));
-        vectorPlaneEnemy.add(new PlaneEnemy(300, 90, 5));
-        for(PlaneEnemy planeEnemy:vectorPlaneEnemy){
-            PlaneManager.getInstance().getPlaneMoveByKey().addObserver(planeEnemy);
-        }
-//        planeMoveByKey.setPositionX(300);
-//        planeMoveByKey.setPositionY(400);
-//        planeMoveByKey.setSpeed(4);
-//        //planeImage = ImageIO.read(new File("Resources/PLANE1.png"));
-//        try {
-//            planeMoveByKey.setSprite(ImageIO.read(new File("Resources/PLANE1.png")));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        Plane planeMoveByMouse = new Plane();
-
     }
     //ham ve
     //ve~ moi. thu o day
@@ -159,13 +139,8 @@ public class GameWindow extends Frame implements Runnable {
 
         super.paint(g);
 
-        g.drawImage(background, 0, 0, null);
-
-        PlaneManager.getInstance().getPlaneMoveByKey().draw(g);
-        PlaneManager.getInstance().getPlaneMoveByMouse().draw(g);
-        for(PlaneEnemy planeEnemy : vectorPlaneEnemy){
-            planeEnemy.draw(g);
-        }
+        g.drawImage(background,GameManager.getInstance().getLocationX(),GameManager.getInstance().getLocationY(),null);
+        cat.draw(g);
         //g.drawLine(0,0, 100, 100);
     }
     //Game Loop
@@ -175,15 +150,8 @@ public class GameWindow extends Frame implements Runnable {
 
         while(true) {
 
-            PlaneManager.getInstance().getPlaneMoveByKey().update();
-            PlaneManager.getInstance().getPlaneMoveByMouse().update();
-            for(PlaneEnemy planeEnemy : vectorPlaneEnemy){
-                planeEnemy.update();
-            }
-
+            cat.update();
             repaint();
-
-
             try {
                 Thread.sleep(17);
             } catch (InterruptedException e) {

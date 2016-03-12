@@ -79,6 +79,10 @@ public class Plane extends GameObject implements Subject{
     private int dam;
     private int speed;
 
+    public Vector<Bullet> getVecBul() {
+        return vecBul;
+    }
+
     private int direction;
 
     public int getPositionX() {

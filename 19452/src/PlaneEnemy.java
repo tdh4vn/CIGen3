@@ -25,7 +25,7 @@ public class PlaneEnemy extends GameObject implements Observer{
     }
 
     public void shot(){
-        Bullet bullet = new Bullet(positionX+30,positionY+59,-5);
+        Bullet bullet = new Bullet(positionX+30,positionY+100,-5);
         vecBul.add(bullet);
     }
 

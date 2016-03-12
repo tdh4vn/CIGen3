@@ -9,10 +9,7 @@ import java.io.IOException;
  */
 public class Bullet extends GameObject{
 
-
     private int speed;
-
-
     private Bullet() {
         positionX = 0;
         positionY = 0;
@@ -35,19 +32,26 @@ public class Bullet extends GameObject{
 
     public void update(){
         this.move();
-        if (checkCollision()){
-            //asdasdsadsadasdasdasdasd
+        if (speed > 0) {
+            for (PlaneEnemy planeEnemy : PlaneEnemyManager.getInstance().getVectorPlaneEnemy()) {
+                if (checkCollision(planeEnemy)) {
+                    //asdasdsadsadasdasdasdasd
+                    PlaneEnemyManager.getInstance().getVectorPlaneEnemy().remove(planeEnemy);
+                    PlaneManager.getInstance().getPlaneMoveByMouse().getVecBul().remove(this);
+                    break;
+                }
+            }
         }
     }
-    public boolean checkCollision(){
+    public boolean checkCollision(PlaneEnemy planeEnemy){
         Rectangle rectBullet = new Rectangle(positionX,positionY,sprite.getWidth()
                                             ,sprite.getHeight());
-        Rectangle rectPlaneKey =
-                new Rectangle(PlaneManager.getInstance().getPlaneMoveByKey().getPositionX()
-                            ,PlaneManager.getInstance().getPlaneMoveByKey().getPositionY()
-                            ,PlaneManager.getInstance().getPlaneMoveByKey().getWidth()
-                            ,PlaneManager.getInstance().getPlaneMoveByKey().getHeight());
-        return rectBullet.intersects(rectPlaneKey);
+        Rectangle r =
+                new Rectangle(planeEnemy.getPositionX()
+                            ,planeEnemy.getPositionY()
+                            ,planeEnemy.sprite.getWidth()
+                            ,planeEnemy.sprite.getHeight());
+        return rectBullet.intersects(r);
     }
     //Lay toa do cua 2 may bay
     //PlaneManager.getInstance()....
